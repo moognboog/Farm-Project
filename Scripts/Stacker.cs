@@ -45,7 +45,8 @@ public class Stacker : MonoBehaviour
             stackedBale[baleCounter-1].SetActive(false);
             stackyard.GetComponent<NewStackyard>().StackDatHay();
             gameManager.AddUnit(outputType);
-            baleCounter--;          
+            baleCounter--;    
+            
         }
     }
 }

@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     private GameObject hayField;
+    public GameObject tabMenu;
 
     public TextMeshProUGUI moneyText;
     public TextMeshProUGUI mowPercentText;
@@ -53,12 +54,20 @@ public class GameManager : MonoBehaviour
     public float hayStackedOut;
     
 
+    [SerializeField] bool inMenu = false;
+    
+
     
 
     // Start is called before the first frame update
     void Start()
     {
         hayField = GameObject.Find("HayField");
+
+        mowPercentText.gameObject.SetActive(true);
+
+        hayField.GetComponent<GrowingHay>().grow = true;
+        hayField.GetComponent<GrowingHay>().StartGrowingHay();
     }
 
     // Update is called once per frame
@@ -68,6 +77,7 @@ public class GameManager : MonoBehaviour
         rakePercent = Mathf.Round((hayCutOut / hayCutIn) * 100);
         balePercent = Mathf.Round((hayRakedOut / hayRakedIn) * 100);
         stackPercent = Mathf.Round((hayBaledOut / hayBaledIn) * 100);
+       
 
         moneyText.text = "Money: $" + money;
         mowPercentText.text = "% Mowed: " + mowPercent + "%";
@@ -101,15 +111,27 @@ public class GameManager : MonoBehaviour
             balePercentText.gameObject.SetActive(false);
             stackPercentText.gameObject.SetActive(true);
         }
-        if(stackPercent > 95)
+        if(stackPercent > 99)
         {
             stackPercentText.gameObject.SetActive(false);
-            sellHayButton.gameObject.SetActive(true);
-            irrigateButton.gameObject.SetActive(true);
-            fertilizeButton.gameObject.SetActive(true);
             nextSeasonButton.gameObject.SetActive(true);
-            
+            NextSeason();
+        }
 
+
+        if(Input.GetKeyDown(KeyCode.Tab))
+        {
+            Debug.Log("Pressed Tab");
+            if(!inMenu)
+            {
+                inMenu = true;
+                tabMenu.SetActive(true);
+            }
+            else if(inMenu)
+            {
+                inMenu = false;
+                tabMenu.SetActive(false);
+            }
         }
     }
 
@@ -141,6 +163,10 @@ public class GameManager : MonoBehaviour
 
     public void NextSeason()
     {
+
+        hayField.GetComponent<GrowingHay>().grow = true;
+        hayField.GetComponent<GrowingHay>().StartGrowingHay();
+
         hayGrown = 0;
         hayMown = 0;
         hayCutIn = 0;
@@ -151,22 +177,13 @@ public class GameManager : MonoBehaviour
         hayBaledOut = 0;
         hayStackedIn = 0;
         hayStackedOut = 0;
-        mowPercent = .1f;
-        rakePercent = .1f;
-        balePercent = .1f;
-        stackPercent = .1f;
 
-        mowPercentText.gameObject.SetActive(true);
-        sellHayButton.gameObject.SetActive(false);
-        irrigateButton.gameObject.SetActive(false);
-        fertilizeButton.gameObject.SetActive(false);
+        mowPercentText.gameObject.SetActive(true);        
         nextSeasonButton.gameObject.SetActive(false);
         startButton.gameObject.SetActive(false);
 
         fertilizerCounter = 0;
         irrigationCounter = 0;
-        hayField.GetComponent<GrowingHay>().grow = true;
-        hayField.GetComponent<GrowingHay>().StartGrowingHay();
 
     }
 
