@@ -37,22 +37,12 @@ public class GrowingHay : MonoBehaviour
     {
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-       
-    }
-
    
 
     IEnumerator GrowTime()
-    {
-       
+    {       
         yield return new WaitForSeconds(growTime);
         grow = false;
-        
-
     }
 
     public void StartGrowingHay()

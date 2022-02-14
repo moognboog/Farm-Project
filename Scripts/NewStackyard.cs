@@ -52,9 +52,7 @@ public class NewStackyard : MonoBehaviour
         if(baleNumber < bales.Length)
         {
             bales[baleNumber].SetActive(true);
-            baleNumber++;
-            
-            
+            baleNumber++;            
         }
         
     }

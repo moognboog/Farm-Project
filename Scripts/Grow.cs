@@ -5,6 +5,7 @@ using UnityEngine;
 public class Grow : MonoBehaviour
 {
     private float hayLimiter = .01f;
+    private float hayLimit = .05f;
 
 
 
@@ -20,13 +21,20 @@ public class Grow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (hayLimiter < .5)
+        if (hayLimiter < hayLimit)
         {
             IncreaseScale();
         }
     }
 
-    
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Tractor"))
+        {
+            hayLimit = .5f;
+        }
+    }
+
     private void IncreaseScale()
     {
         float scaleX = transform.localScale.x + .001f;

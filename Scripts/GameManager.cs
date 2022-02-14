@@ -129,11 +129,13 @@ public class GameManager : MonoBehaviour
             Debug.Log("Pressed Tab");
             if(!inMenu)
             {
+                Time.timeScale = 0;
                 inMenu = true;
                 tabMenu.SetActive(true);
             }
             else if(inMenu)
             {
+                Time.timeScale = 1;
                 inMenu = false;
                 tabMenu.SetActive(false);
             }
