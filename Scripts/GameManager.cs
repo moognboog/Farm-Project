@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     public Button nextSeasonButton;
     public Button startButton;
 
-    public int money = 0;
+    public int money;
     public int sellPrice = 20;
     public int irrigationPrice = 250;
     private int irrigationCounter = 0;
@@ -68,6 +68,11 @@ public class GameManager : MonoBehaviour
 
         hayField.GetComponent<GrowingHay>().grow = true;
         hayField.GetComponent<GrowingHay>().StartGrowingHay();
+    }
+
+    private void Awake()
+    {
+        money = MainManager.Instance.saveMoney;
     }
 
     // Update is called once per frame
@@ -133,11 +138,14 @@ public class GameManager : MonoBehaviour
                 tabMenu.SetActive(false);
             }
         }
+
+        MainManager.Instance.saveMoney = money;
     }
 
     public void HaySold()
     {
         money += sellPrice;
+        
     }
 
     public void BuyIrrigation()

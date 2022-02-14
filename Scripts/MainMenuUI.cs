@@ -19,6 +19,14 @@ public class MainMenuUI : MonoBehaviour
     {
         
     }
+    public void LoadOnClick()
+    {
+        MainManager.Instance.Load();
+    }
+    public void SaveOnClick()
+    {
+        MainManager.Instance.Save();
+    }
 
     public void FirstSceneTransition()
     {
