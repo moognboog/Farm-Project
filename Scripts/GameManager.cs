@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -104,21 +105,7 @@ public class GameManager : MonoBehaviour
             fertilizeButton.gameObject.SetActive(true);
 
         }
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            if (!menuUp)
-            {
-                tabMenu.SetActive(true);
-                menuUp = true;
-            }
-            else
-            {
-                tabMenu.SetActive(false);
-                menuUp = false;
-            }
-            
-
-        }
+       
     }
 
     public void HaySold()
@@ -177,11 +164,16 @@ public class GameManager : MonoBehaviour
 
             case 9:
                 hayStackedOut++;
-                Debug.Log("Suctracted from case " + unitType);
+                Debug.Log("Subtracted from case " + unitType);
                 break;
 
 
 
-        }        
+        }
+        
+    }
+    public void FirstSceneTransition()
+    {
+        SceneManager.LoadScene(1);
     }
 }
