@@ -33,15 +33,11 @@ public class Animals : MonoBehaviour
               
         lookDirection = (bale.transform.position - transform.position).normalized;
 
-        float singleStep = turnSpeed * Time.deltaTime;
+        LookAtBale();
 
-        Vector3 newDirection = Vector3.RotateTowards(transform.forward, lookDirection, singleStep, 0.0f);
+        transform.Translate(Vector3.forward * Time.deltaTime * speed);
 
-        cowRB.AddForce(lookDirection * speed);
-
-        Debug.DrawRay(transform.position, newDirection, Color.red);
-
-        transform.rotation = Quaternion.LookRotation(newDirection);
+       
     }
 
     public void BalePlaced()
@@ -52,6 +48,19 @@ public class Animals : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         isBale = false;
+    }
+
+    private void LookAtBale()
+    {
+        lookDirection = (bale.transform.position - transform.position).normalized;
+
+        float singleStep = turnSpeed * Time.deltaTime;
+
+        Vector3 newDirection = Vector3.RotateTowards(transform.forward, lookDirection, singleStep, 0.0f);
+
+        Debug.DrawRay(transform.position, newDirection, Color.red);
+
+        transform.rotation = Quaternion.LookRotation(newDirection);
     }
 
 }

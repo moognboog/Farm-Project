@@ -6,9 +6,6 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    private GameObject hayField;
-    public GameObject tabMenu;
-
     public TextMeshProUGUI moneyText;
     public TextMeshProUGUI mowPercentText;
     public TextMeshProUGUI rakePercentText;
@@ -18,22 +15,13 @@ public class GameManager : MonoBehaviour
     public Button sellHayButton;
     public Button irrigateButton;
     public Button fertilizeButton;
-    public Button nextSeasonButton;
-    public Button startButton;
 
-    public int money;
+    public int money = 0;
     public int sellPrice = 20;
-    public int irrigationPrice = 250;
-    private int irrigationCounter = 0;
-    private int irrigationLimit = 3;
-
-    public int fertilizingPrice = 1000;
-    private int fertilizerCounter = 0;
-    private int fertilizerLimit = 1;
 
     public float hayGrown;
     public float hayMown;
-    public float mowPercent;
+    public float mowPercent = 0.1f;
 
     public float hayCutIn;
     public float hayCutOut;
@@ -52,9 +40,10 @@ public class GameManager : MonoBehaviour
 
     public float hayStackedIn;
     public float hayStackedOut;
-    
 
-    [SerializeField] bool inMenu = false;
+    public GameObject tabMenu;
+    private bool menuUp = false;
+
     
 
     
@@ -62,17 +51,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        hayField = GameObject.Find("HayField");
-
-        mowPercentText.gameObject.SetActive(true);
-
-        hayField.GetComponent<GrowingHay>().grow = true;
-        hayField.GetComponent<GrowingHay>().StartGrowingHay();
-    }
-
-    private void Awake()
-    {
-        money = MainManager.Instance.saveMoney;
+        mowPercentText.gameObject.SetActive(true);  
     }
 
     // Update is called once per frame
@@ -82,26 +61,27 @@ public class GameManager : MonoBehaviour
         rakePercent = Mathf.Round((hayCutOut / hayCutIn) * 100);
         balePercent = Mathf.Round((hayRakedOut / hayRakedIn) * 100);
         stackPercent = Mathf.Round((hayBaledOut / hayBaledIn) * 100);
-       
 
         moneyText.text = "Money: $" + money;
-        mowPercentText.text = "% Mowed: " + mowPercent + "%";
-        
+        if(mowPercent > 0)
+        {
+            mowPercentText.text = "Mowed: " + mowPercent + "%";
+        }
         if(rakePercent > 0)
         {
-            rakePercentText.text = "% Raked: " + rakePercent + "%";
+            rakePercentText.text = "Raked: " + rakePercent + "%";
         }
         if(balePercent > 0)
         {
-            balePercentText.text = "% Baled: " + balePercent + "%";
+            balePercentText.text = "Baled: " + balePercent + "%";
         }
         if(stackPercent > 0)
         {
-            stackPercentText.text = "% Stacked: " + stackPercent + "%";
+            stackPercentText.text = "Stacked: " + stackPercent + "%";
         }      
         
 
-        if(mowPercent > 94)
+        if(mowPercent > 95)
         {
             mowPercentText.gameObject.SetActive(false);
             rakePercentText.gameObject.SetActive(true);
@@ -116,85 +96,34 @@ public class GameManager : MonoBehaviour
             balePercentText.gameObject.SetActive(false);
             stackPercentText.gameObject.SetActive(true);
         }
-        if(stackPercent > 99)
+        if(stackPercent > 95)
         {
             stackPercentText.gameObject.SetActive(false);
-            nextSeasonButton.gameObject.SetActive(true);
-            NextSeason();
+            sellHayButton.gameObject.SetActive(true);
+            irrigateButton.gameObject.SetActive(true);
+            fertilizeButton.gameObject.SetActive(true);
+
         }
-
-
-        if(Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Tab))
         {
-            Debug.Log("Pressed Tab");
-            if(!inMenu)
+            if (!menuUp)
             {
-                Time.timeScale = 0;
-                inMenu = true;
                 tabMenu.SetActive(true);
+                menuUp = true;
             }
-            else if(inMenu)
+            else
             {
-                Time.timeScale = 1;
-                inMenu = false;
                 tabMenu.SetActive(false);
+                menuUp = false;
             }
-        }
+            
 
-        MainManager.Instance.saveMoney = money;
+        }
     }
 
     public void HaySold()
     {
         money += sellPrice;
-        
-    }
-
-    public void BuyIrrigation()
-    {
-        if(irrigationCounter < irrigationLimit && money > irrigationPrice)
-        {
-            money -= irrigationPrice;
-            irrigationCounter++;
-            hayField.GetComponent<GrowingHay>().Irrigate();
-        }
-        
-    }
-
-    public void BuyFertilizer()
-    {
-        if(fertilizerCounter < fertilizerLimit && money > fertilizingPrice)
-        {
-            money -= fertilizingPrice;
-            fertilizerCounter++;
-            hayField.GetComponent<GrowingHay>().Fertilize();
-        }
-    }
-
-    public void NextSeason()
-    {
-
-        hayField.GetComponent<GrowingHay>().grow = true;
-        hayField.GetComponent<GrowingHay>().StartGrowingHay();
-
-        hayGrown = 0;
-        hayMown = 0;
-        hayCutIn = 0;
-        hayCutOut = 0;
-        hayRakedIn = 0;
-        hayRakedOut = 0;
-        hayBaledIn = 0;
-        hayBaledOut = 0;
-        hayStackedIn = 0;
-        hayStackedOut = 0;
-
-        mowPercentText.gameObject.SetActive(true);        
-        nextSeasonButton.gameObject.SetActive(false);
-        startButton.gameObject.SetActive(false);
-
-        fertilizerCounter = 0;
-        irrigationCounter = 0;
-
     }
 
     public void AddUnit(int unitType)
@@ -250,7 +179,9 @@ public class GameManager : MonoBehaviour
                 hayStackedOut++;
                 Debug.Log("Suctracted from case " + unitType);
                 break;
-        }   
-        
+
+
+
+        }        
     }
 }

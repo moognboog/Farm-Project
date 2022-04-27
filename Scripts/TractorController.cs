@@ -37,15 +37,6 @@ public class TractorController : MonoBehaviour
         
     }
 
-    private void Awake()
-    {
-        if (MainManager.Instance.loaded)
-        {
-            transform.position = MainManager.Instance.savePos;
-            transform.rotation = MainManager.Instance.saveRot;
-        }        
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -69,10 +60,9 @@ public class TractorController : MonoBehaviour
         {
             transform.Rotate(Vector3.up * Time.deltaTime * turnSpeed * moveHorizontal * reverse);
         }
+        
 
-
-        MainManager.Instance.savePos = transform.position;
-        MainManager.Instance.saveRot = transform.rotation;
+        
 
     }
 

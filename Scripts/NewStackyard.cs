@@ -15,20 +15,12 @@ public class NewStackyard : MonoBehaviour
     void Start()
     {
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
-        if(MainManager.Instance != null)
-        {
-            stackedHayCounter = MainManager.Instance.saveBales;
-        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (baleNumber < stackedHayCounter)
-        {
-            StackDatHay();
-        }
-        MainManager.Instance.saveBales = baleNumber;
+        
     }
 
     public void SellDatHay()
@@ -42,7 +34,6 @@ public class NewStackyard : MonoBehaviour
             gameManager.HaySold();
             
             stackedHayCounter--;
-            MainManager.Instance.saveBales--;
         }
 
     }
@@ -52,7 +43,7 @@ public class NewStackyard : MonoBehaviour
         if(baleNumber < bales.Length)
         {
             bales[baleNumber].SetActive(true);
-            baleNumber++;            
+            baleNumber++;
         }
         
     }

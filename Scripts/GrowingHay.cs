@@ -21,32 +21,23 @@ public class GrowingHay : MonoBehaviour
 
     private float spawnRate;
 
+    private int calcGrowthRate = 1;
+
     public int growTime = 15;
 
     public bool grow = true;
 
-    public float waterModifier = .1f;
-    public float watering = 1f;
-   
-    public float fertilizerModifier = .3f;
-    public float fertilizing = 1f;
+    public float watering;
+    public float fertilizing;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        //InvokeRepeating("GrowHay", 1f, .5f);
+
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
-    }
-   
-
-    IEnumerator GrowTime()
-    {       
-        yield return new WaitForSeconds(growTime);
-        grow = false;
-    }
-
-    public void StartGrowingHay()
-    {
+        
         Invoke("GrowHay", .1f);
         Invoke("GrowHay", .1f);
         Invoke("GrowHay", .1f);
@@ -69,6 +60,23 @@ public class GrowingHay : MonoBehaviour
         StartCoroutine(GrowTime());
     }
 
+    // Update is called once per frame
+    void Update()
+    {
+       
+    }
+
+   
+
+    IEnumerator GrowTime()
+    {
+       
+        yield return new WaitForSeconds(growTime);
+        grow = false;
+        
+
+    }
+
     private void GrowHay()
     {
         gameManager.AddUnit(0);
@@ -88,16 +96,9 @@ public class GrowingHay : MonoBehaviour
         {
             Instantiate(hay, randomHayLocation, randomHayRotation);
             Invoke("GrowHay", spawnRate);
-        }        
-    }
+        }
 
-    public void Irrigate()
-    {        
-       watering -= waterModifier;         
-    }
 
-    public void Fertilize()
-    {
-        fertilizing -= fertilizerModifier;        
+        
     }
 }

@@ -23,7 +23,8 @@ public class Stacker : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        stackedHay = GameObject.Find("Stackyard Parent").GetComponent<NewStackyard>().stackedHayCounter;             
+        stackedHay = GameObject.Find("Stackyard Parent").GetComponent<NewStackyard>().stackedHayCounter;
+             
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -33,7 +34,8 @@ public class Stacker : MonoBehaviour
             stackedBale[baleCounter].SetActive(true);
             gameManager.AddUnit(inputType);
             baleCounter++;    
-        }        
+        }
+        
     }
     private void OnTriggerStay(Collider other)
     {
@@ -43,8 +45,7 @@ public class Stacker : MonoBehaviour
             stackedBale[baleCounter-1].SetActive(false);
             stackyard.GetComponent<NewStackyard>().StackDatHay();
             gameManager.AddUnit(outputType);
-            baleCounter--;    
-            
+            baleCounter--;          
         }
     }
 }
