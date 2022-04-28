@@ -5,6 +5,7 @@ using UnityEngine;
 public class Grow : MonoBehaviour
 {
     private float hayLimiter = .01f;
+    private Quaternion rotation;
 
 
 
@@ -12,9 +13,12 @@ public class Grow : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        rotation = Quaternion.Euler(0f, Random.Range(0.0f, 360f), .5f);
         transform.position = new Vector3(transform.position.x, .1f, transform.position.z);
         transform.localScale = new Vector3(.1f, .1f, .1f);
-        
+        transform.rotation = rotation;
+
+
     }
 
     // Update is called once per frame
