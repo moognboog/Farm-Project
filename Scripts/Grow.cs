@@ -6,6 +6,11 @@ public class Grow : MonoBehaviour
 {
     private float hayLimiter = .01f;
     private Quaternion rotation;
+    public float maxSize;
+    public bool isWatered = false;
+    public bool isFertilized = false;
+
+    private GameManager gameManager;
 
 
 
@@ -13,6 +18,8 @@ public class Grow : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+
         rotation = Quaternion.Euler(0f, Random.Range(0.0f, 360f), .5f);
         transform.position = new Vector3(transform.position.x, .1f, transform.position.z);
         transform.localScale = new Vector3(.1f, .1f, .1f);
@@ -24,7 +31,22 @@ public class Grow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (hayLimiter < .5)
+        isWatered = gameManager.isWatered;
+        isFertilized = gameManager.isFertilized;
+
+        maxSize = .1f;
+
+        if (isWatered)
+        {
+            maxSize += .4f;
+        }
+        if (isFertilized)
+        {
+            maxSize += .5f;
+        }
+        
+
+        if (hayLimiter < maxSize)
         {
             IncreaseScale();
         }
@@ -34,7 +56,7 @@ public class Grow : MonoBehaviour
     private void IncreaseScale()
     {
         float scaleX = transform.localScale.x + .001f;
-        float scaleY = transform.localScale.y + .002f;
+        float scaleY = transform.localScale.y + .001f;
         float scaleZ = transform.localScale.z + .001f;
 
         float heightY = transform.position.y + .001f;

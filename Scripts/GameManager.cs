@@ -45,6 +45,9 @@ public class GameManager : MonoBehaviour
     public GameObject tabMenu;
     private bool menuUp = false;
 
+    public bool isWatered;
+    public bool isFertilized;
+
     
 
     
@@ -175,5 +178,13 @@ public class GameManager : MonoBehaviour
     public void FirstSceneTransition()
     {
         SceneManager.LoadScene(1);
+    }
+    public void Irrigate()
+    {
+        isWatered = true;
+    }
+    public void Fertilize()
+    {
+        isFertilized = true;
     }
 }
