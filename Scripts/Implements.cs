@@ -39,13 +39,22 @@ public class Implements : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-
+        
 
         if (other.gameObject.CompareTag(inputObjectTag))
         {
-            Destroy(other.gameObject);
-            gameManager.AddUnit(intakeType);
-            hayCount++;
+            if (other.gameObject.CompareTag("Hay"))
+            {
+                gameManager.AddUnit(intakeType);
+                hayCount++;
+            }
+            else
+            {
+                Destroy(other.gameObject);
+                gameManager.AddUnit(intakeType);
+                hayCount++;
+            }
+            
             
 
         }

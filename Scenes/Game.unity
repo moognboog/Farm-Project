@@ -291,7 +291,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -86.853, y: -25}
+  m_AnchoredPosition: {x: -93.93906, y: -25}
   m_SizeDelta: {x: 171.71, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &12654493
@@ -348,7 +348,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 4
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -357,7 +357,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_enableWordWrapping: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -377,7 +377,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -1.4483643, w: 0}
+  m_margin: {x: -1.0568848, y: 0, z: -1.4483643, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -17892,7 +17892,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 631335199}
-  m_LocalRotation: {x: 0.24071698, y: 0.6648725, z: -0.24071705, w: 0.6648723}
+  m_LocalRotation: {x: 0.240717, y: 0.6648726, z: -0.24071702, w: 0.66487235}
   m_LocalPosition: {x: -44.39, y: 10.84, z: -21.079996}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -23056,7 +23056,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &820830712
 RectTransform:
   m_ObjectHideFlags: 0
@@ -23140,7 +23140,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 820830711}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -29697,7 +29697,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1130075902}
-  m_LocalRotation: {x: 0.24071698, y: 0.6648725, z: -0.24071705, w: 0.6648723}
+  m_LocalRotation: {x: 0.240717, y: 0.6648726, z: -0.24071702, w: 0.66487235}
   m_LocalPosition: {x: -44.39, y: 10.84, z: -21.079996}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -47429,9 +47429,9 @@ MonoBehaviour:
   balePercentText: {fileID: 979771222}
   stackPercentText: {fileID: 1215044567}
   sellHayButton: {fileID: 399959800}
-  irrigateButton: {fileID: 0}
-  fertilizeButton: {fileID: 0}
-  money: 0
+  irrigateButton: {fileID: 410613172}
+  fertilizeButton: {fileID: 623735818}
+  money: 10000
   sellPrice: 5
   hayGrown: 0
   hayMown: 0
@@ -47450,6 +47450,7 @@ MonoBehaviour:
   tabMenu: {fileID: 827453526}
   isWatered: 0
   isFertilized: 0
+  next: 0
 --- !u!1 &1875059372
 GameObject:
   m_ObjectHideFlags: 0
@@ -55011,7 +55012,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4897317121180184745, guid: 1fc361e34857a4940b530d8b4431bd1c, type: 3}
       propertyPath: intakeType
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4897317121180184745, guid: 1fc361e34857a4940b530d8b4431bd1c, type: 3}
       propertyPath: outputType

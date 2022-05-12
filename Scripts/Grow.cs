@@ -9,16 +9,20 @@ public class Grow : MonoBehaviour
     public float maxSize;
     public bool isWatered = false;
     public bool isFertilized = false;
+    public bool next = false;
 
     private GameManager gameManager;
 
-
+    
 
     
     // Start is called before the first frame update
     void Start()
     {
+        
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+
+        gameManager.AddUnit(0);
 
         rotation = Quaternion.Euler(0f, Random.Range(0.0f, 360f), .5f);
         transform.position = new Vector3(transform.position.x, .1f, transform.position.z);
@@ -33,6 +37,8 @@ public class Grow : MonoBehaviour
     {
         isWatered = gameManager.isWatered;
         isFertilized = gameManager.isFertilized;
+        next = gameManager.next;
+
 
         maxSize = .1f;
 
@@ -43,6 +49,10 @@ public class Grow : MonoBehaviour
         if (isFertilized)
         {
             maxSize += .5f;
+        }
+        if (next)
+        {
+            gameObject.tag.Replace("Untagged", "Hay");
         }
         
 
@@ -67,4 +77,20 @@ public class Grow : MonoBehaviour
         hayLimiter += .001f;
 
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Mower"))
+        {
+            rotation = Quaternion.Euler(0f, Random.Range(0.0f, 360f), .5f);
+            transform.position = new Vector3(transform.position.x, .1f, transform.position.z);
+            transform.localScale = new Vector3(.1f, .1f, .1f);
+            transform.rotation = rotation;
+
+            isWatered = false;
+            isFertilized = false;
+            gameObject.tag.Replace(tag, "Untagged");
+        }
+    }
+   
 }

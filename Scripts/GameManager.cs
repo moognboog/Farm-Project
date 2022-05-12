@@ -49,6 +49,8 @@ public class GameManager : MonoBehaviour
     private int irrPrice = 250;
     private int ferPrice = 5000;
 
+    public bool next = false;
+
     
 
     
@@ -123,6 +125,7 @@ public class GameManager : MonoBehaviour
         if(money >= irrPrice)
         {
             isWatered = true;
+            money -= irrPrice;
         }        
     }
     public void Fertilize()
@@ -130,8 +133,14 @@ public class GameManager : MonoBehaviour
         if(money >= ferPrice)
         {
             isFertilized = true;
+            money -= ferPrice;
         }
         
+    }
+    public void NextSeason()
+    {
+        next = true;
+        Debug.Log("Next Season");
     }
     public void AddUnit(int unitType)
     {
