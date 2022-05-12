@@ -21,8 +21,6 @@ public class GrowingHay : MonoBehaviour
 
     private float spawnRate;
 
-    private int calcGrowthRate = 1;
-
     public int growTime = 15;
 
     public bool grow = true;

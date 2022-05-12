@@ -43,10 +43,11 @@ public class GameManager : MonoBehaviour
     public float hayStackedOut;
 
     public GameObject tabMenu;
-    private bool menuUp = false;
-
+    
     public bool isWatered;
     public bool isFertilized;
+    private int irrPrice = 250;
+    private int ferPrice = 5000;
 
     
 
@@ -116,6 +117,22 @@ public class GameManager : MonoBehaviour
         money += sellPrice;
     }
 
+    
+    public void Irrigate()
+    {
+        if(money >= irrPrice)
+        {
+            isWatered = true;
+        }        
+    }
+    public void Fertilize()
+    {
+        if(money >= ferPrice)
+        {
+            isFertilized = true;
+        }
+        
+    }
     public void AddUnit(int unitType)
     {
         switch (unitType)
@@ -147,22 +164,22 @@ public class GameManager : MonoBehaviour
 
             case 5:
                 hayMown++;
-                Debug.Log("Suctracted from case " + unitType);
+                Debug.Log("Subtracted from case " + unitType);
                 break;
 
             case 6:
                 hayCutOut++;
-                Debug.Log("Suctracted from case " + unitType);
+                Debug.Log("Subtracted from case " + unitType);
                 break;
 
             case 7:
                 hayRakedOut++;
-                Debug.Log("Suctracted from case " + unitType);
+                Debug.Log("Subtracted from case " + unitType);
                 break;
 
             case 8:
                 hayBaledOut++;
-                Debug.Log("Suctracted from case " + unitType);
+                Debug.Log("Subtracted from case " + unitType);
                 break;
 
             case 9:
@@ -173,18 +190,10 @@ public class GameManager : MonoBehaviour
 
 
         }
-        
+
     }
     public void FirstSceneTransition()
     {
         SceneManager.LoadScene(1);
-    }
-    public void Irrigate()
-    {
-        isWatered = true;
-    }
-    public void Fertilize()
-    {
-        isFertilized = true;
     }
 }
