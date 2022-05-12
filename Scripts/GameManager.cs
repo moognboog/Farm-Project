@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     public Button sellHayButton;
     public Button irrigateButton;
     public Button fertilizeButton;
+    public Button nextSeasonButton;
 
     public int money = 0;
     public int sellPrice = 20;
@@ -50,7 +51,9 @@ public class GameManager : MonoBehaviour
     private int ferPrice = 5000;
 
     public bool next = false;
-
+    public bool seasonIrr = false;
+    public bool seasonFer = false;
+    
     
 
     
@@ -62,8 +65,28 @@ public class GameManager : MonoBehaviour
     }
 
     // Update is called once per frame
+  
     void Update()
     {
+        
+        if(money >= irrPrice)
+        {
+            irrigateButton.interactable = true;
+        }
+        else
+        {
+            irrigateButton.interactable = false;
+        }
+
+        if(money >= ferPrice)
+        {
+            fertilizeButton.interactable = true;
+        }
+        else
+        {
+            fertilizeButton.interactable = false;
+        }
+
         mowPercent = Mathf.Round((hayMown / hayGrown) * 100);
         rakePercent = Mathf.Round((hayCutOut / hayCutIn) * 100);
         balePercent = Mathf.Round((hayRakedOut / hayRakedIn) * 100);
@@ -93,25 +116,37 @@ public class GameManager : MonoBehaviour
             mowPercentText.gameObject.SetActive(false);
             rakePercentText.gameObject.SetActive(true);
         }
-        if(rakePercent > 95)
+        if(rakePercent > 99)
         {
             rakePercentText.gameObject.SetActive(false);
             balePercentText.gameObject.SetActive(true);
         }
-        if(balePercent > 95)
+        if(balePercent > 99)
         {
             balePercentText.gameObject.SetActive(false);
             stackPercentText.gameObject.SetActive(true);
         }
-        if(stackPercent > 95)
+        if(stackPercent > 99)
         {
             stackPercentText.gameObject.SetActive(false);
             sellHayButton.gameObject.SetActive(true);
             irrigateButton.gameObject.SetActive(true);
             fertilizeButton.gameObject.SetActive(true);
-
+            next = true;
+            isWatered = false;
+            isFertilized = false;
+            seasonFer = false;
+            seasonIrr = false;
+            ResetPercentages();
+            StartCoroutine(NextOff());
+            
         }
        
+    }
+    IEnumerator NextOff()
+    {
+        yield return new WaitForSeconds(5);
+        next = false;
     }
 
     public void HaySold()
@@ -122,26 +157,50 @@ public class GameManager : MonoBehaviour
     
     public void Irrigate()
     {
-        if(money >= irrPrice)
+        if(money >= irrPrice && !seasonIrr)
         {
             isWatered = true;
             money -= irrPrice;
+            StartCoroutine(GrowTimeIrr());
+            seasonIrr = true;
+            irrigateButton.gameObject.SetActive(false);
         }        
     }
     public void Fertilize()
     {
-        if(money >= ferPrice)
+        if(money >= ferPrice && !seasonFer)
         {
             isFertilized = true;
             money -= ferPrice;
+            StartCoroutine(GrowTimeFer());
+            seasonFer = true;
+            fertilizeButton.gameObject.SetActive(false);
         }
         
     }
-    public void NextSeason()
+    IEnumerator GrowTimeIrr()
     {
-        next = true;
-        Debug.Log("Next Season");
+        yield return new WaitForSeconds(7);
+        isWatered = false;
     }
+    IEnumerator GrowTimeFer()
+    {
+        yield return new WaitForSeconds(7);
+        isFertilized = false;
+        
+    }
+  private void ResetPercentages()
+    {
+        
+        hayMown = 0f;
+        hayCutIn = 0.1f;
+        hayCutOut = 0f;
+        hayRakedIn = 0.1f;
+        hayRakedOut = 0f;
+        hayBaledIn = 0.1f;
+        hayBaledOut = 0f;
+    }
+  
     public void AddUnit(int unitType)
     {
         switch (unitType)

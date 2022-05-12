@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class NewStackyard : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class NewStackyard : MonoBehaviour
 
     public GameObject stacker;
     public int stackedHayCounter = 0;
+
+    public Button sellHayButton;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +23,14 @@ public class NewStackyard : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (baleNumber > 0)
+        {
+            sellHayButton.interactable = true;
+        }
+        else
+        {
+            sellHayButton.interactable = false;
+        }
     }
 
     public void SellDatHay()

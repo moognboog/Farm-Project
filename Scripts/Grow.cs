@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class Grow : MonoBehaviour
 {
-    private float hayLimiter = .01f;
+    private float hayLimiter = .001f;
     private Quaternion rotation;
-    public float maxSize;
+    public float maxSize = .2f;
     public bool isWatered = false;
     public bool isFertilized = false;
     public bool next = false;
+    public bool cut = false;
+    public int haySize = 0;
 
     private GameManager gameManager;
 
@@ -35,24 +37,33 @@ public class Grow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        haySize = 0;
+        maxSize = 0.2f;
         isWatered = gameManager.isWatered;
         isFertilized = gameManager.isFertilized;
         next = gameManager.next;
 
-
-        maxSize = .1f;
-
         if (isWatered)
         {
-            maxSize += .4f;
+            maxSize += .2f;
+            haySize += 1;
+            isWatered = false;
         }
         if (isFertilized)
         {
-            maxSize += .5f;
+            maxSize += .2f;
+            haySize += 2;
+            isFertilized = false;
         }
         if (next)
         {
-            gameObject.tag.Replace("Untagged", "Hay");
+            gameObject.tag = "Hay";
+            maxSize += .19f;
+            cut = false;
+        }
+        if (cut)
+        {
+            maxSize -= .19f;
         }
         
 
@@ -61,15 +72,17 @@ public class Grow : MonoBehaviour
             IncreaseScale();
         }
     }
+  
 
-    
+
+
     private void IncreaseScale()
     {
         float scaleX = transform.localScale.x + .001f;
-        float scaleY = transform.localScale.y + .001f;
+        float scaleY = transform.localScale.y + .003f;
         float scaleZ = transform.localScale.z + .001f;
 
-        float heightY = transform.position.y + .001f;
+        float heightY = transform.position.y + .0015f;
 
         transform.localScale = new Vector3(scaleX, scaleY, scaleZ);
         transform.position = new Vector3(transform.position.x, heightY, transform.position.z);
@@ -82,6 +95,7 @@ public class Grow : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Mower"))
         {
+            
             rotation = Quaternion.Euler(0f, Random.Range(0.0f, 360f), .5f);
             transform.position = new Vector3(transform.position.x, .1f, transform.position.z);
             transform.localScale = new Vector3(.1f, .1f, .1f);
@@ -89,8 +103,17 @@ public class Grow : MonoBehaviour
 
             isWatered = false;
             isFertilized = false;
-            gameObject.tag.Replace(tag, "Untagged");
+            cut = true;
+            haySize = 0;
+            
+            hayLimiter = .001f;
+            StartCoroutine(Untagger());
         }
+    }
+    IEnumerator Untagger()
+    {
+        yield return new WaitForSeconds(.5f);
+        gameObject.tag = "Untagged";
     }
    
 }
